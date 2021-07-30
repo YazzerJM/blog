@@ -8,6 +8,8 @@ use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
+use App\Http\Requests\StorePostRequest;
+
 class PostController extends Controller
 {
 
@@ -24,9 +26,15 @@ class PostController extends Controller
         return view('admin/posts/create', compact('categories', 'tags'));
     }
 
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //
+        $post = Post::create($request->all());
+
+        if($request->tags){
+            $post->tags()->attach($request->tags);
+        }
+
+        return redirect()->route('admin.posts.edit', $post);
     }
 
     public function show(Post $post)
