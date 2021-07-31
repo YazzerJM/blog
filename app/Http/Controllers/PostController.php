@@ -12,12 +12,15 @@ class PostController extends Controller
 {
 
     public function index(){
+
         $posts = Post::where('status', 2)->latest('id')->paginate(8);
 
         return view('posts.index', compact('posts'));
     }
 
     public function show(Post $post){
+
+        $this->authorize('published', $post);
 
         $similar = Post::where('category_id', $post->category_id)
             ->where('status', 2)
