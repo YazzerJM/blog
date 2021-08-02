@@ -9,6 +9,13 @@ use App\Models\Tag;
 class TagController extends Controller
 {
 
+    public function __construct(){
+        $this->middleware('can:admin.tags.index')->only('index');
+        $this->middleware('can:admin.tags.create')->only('create', 'store');
+        $this->middleware('can:admin.tags.edit')->only('edit', 'update');
+        $this->middleware('can:admin.tags.destroy')->only('destroy');
+    }
+
     public function index()
     {
 
@@ -44,11 +51,6 @@ class TagController extends Controller
 
         return redirect()->route('admin.tags.edit', compact('tag'))->with('info', 'La etiqueta se creo con exito');
 
-    }
-
-    public function show(Tag $tag)
-    {
-        return view('admin.tags.show', compact('tag'));
     }
 
     public function edit(Tag $tag)

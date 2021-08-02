@@ -260,10 +260,6 @@ return [
 
         ],
         [
-            'header' => 'Administrador',
-            'can' => 'admin.categories.index'
-        ],
-        [
             'text' => 'Categorías',
             'route'  => 'admin.categories.index',
             'icon' => 'fab fa-fw fa-buffer',
